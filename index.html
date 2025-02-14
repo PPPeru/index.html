@@ -81,7 +81,7 @@
 <body>
 
     <!-- Música de fondo -->
-    <audio id="background-audio" autoplay loop>
+    <audio id="background-audio" loop>
         <source src="https://files.catbox.moe/ib0bpb.mp3" type="audio/mpeg">
         Tu navegador no soporta el audio.
     </audio>
@@ -113,8 +113,8 @@
             noButton.style.top = `${y}px`;
         });
 
-        // Intentar reproducir el audio automáticamente
-        document.addEventListener('DOMContentLoaded', function() {
+        // Función para reproducir el audio automáticamente
+        function playAudio() {
             let audio = document.getElementById("background-audio");
             let playPromise = audio.play();
 
@@ -123,10 +123,15 @@
                     console.log("Autoplay exitoso.");
                 }).catch(error => {
                     console.log("Autoplay bloqueado. Requiere interacción del usuario.");
-                    audio.setAttribute("controls", "true"); // Agrega controles si falla
+                    document.addEventListener("click", () => {
+                        audio.play();
+                    }, { once: true });
                 });
             }
-        });
+        }
+
+        // Llamar a la función cuando la página cargue
+        document.addEventListener('DOMContentLoaded', playAudio);
     </script>
 
 </body>
